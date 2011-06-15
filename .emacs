@@ -17,7 +17,9 @@
 ;; by changing its name
 
 (setq-default abbrev-mode t)
-(read-abbrev-file "~/.abbrev_defs")
+(setq abbrev-file-name ~/.emacs.d/abbrev_defs)
+(if (file-exists-p abbrev-file-name)
+    (quietly-read-abbrev-file)
 (setq save-abbrevs t)
 ;; ===== Set standard indent to 4 ====
 (setq standard-indent 4)
