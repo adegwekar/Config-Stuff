@@ -63,3 +63,8 @@
 ;; via hooks.
 
 (setq auto-fill-mode 1)
+;; To make cut/copy/paste behave as it does in Macintosh and Windows
+(pc-selection-mode)
+(require 'color-theme)
+(setq color-theme-is-global t)
+(color-theme-robin-hood)
