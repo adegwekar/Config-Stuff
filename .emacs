@@ -10,17 +10,6 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  )
-;; ===== Automatically load abbreviations table =====
-
-;; Note that emacs chooses, by default, the filename
-;; "~/.abbrev_defs", so don't try to be too clever
-;; by changing its name
-
-(setq-default abbrev-mode t)
-(setq abbrev-file-name ~/.emacs.d/.abbrev_defs)
-(if (file-exists-p abbrev-file-name)
-    (quietly-read-abbrev-file)
-(setq save-abbrevs t)
 ;; ===== Set standard indent to 4 ====
 (setq standard-indent 4)
 ;; ========== Line by line scrolling ========== 
