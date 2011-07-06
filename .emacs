@@ -58,4 +58,4 @@
 (pc-selection-mode)
 (require 'color-theme)
 (setq color-theme-is-global t)
-(color-theme-robin-hood)
+(color-theme-dark-laptop)
