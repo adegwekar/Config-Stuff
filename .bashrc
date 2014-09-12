@@ -59,13 +59,15 @@ else
 fi
 
 # Bash shell command completion
-if [ -f /opt/local/share/doc/git-core/contrib/completion/git-completion.bash ]; then
-    . /opt/local/share/doc/git-core/contrib/completion/git-completion.bash
+if [ -f /usr/local/etc/bash_completion.d/git-completion.bash ]; then
+    . /usr/local/etc/bash_completion.d/git-completion.bash
 fi
 
-if [ -f /opt/local/share/doc/git-core/contrib/completion/git-prompt.sh ]; then
-    . /opt/local/share/doc/git-core/contrib/completion/git-prompt.sh
+
+if [ -f /usr/local/etc/bash_completion.d/git-prompt.sh ]; then
+    . /usr/local/etc/bash_completion.d/git-prompt.sh
 fi
+
 GIT_PS1_SHOWDIRTYSTATE=true
 GIT_PS1_SHOWUNTRACKEDFILES=yes
 GIT_PS1_SHOWUPSTREAM=verbose
@@ -103,11 +105,12 @@ fi
 
 # User specific environment and startup programs
 
-PATH=~/depot_tools:/sbin:/usr/sbin:/usr/local/sbin:$PATH
+export PATH=${PATH}:${HOME}/.rvm/bin:/Applications/adt-bundle-mac-x86_64-20140702/sdk/tools:/Applications/adt-bundle-mac-x86_64-20140702/sdk/platform-tools
+
 BASH_ENV=$HOME/.bashrc
 USERNAME=""
 
-export USERNAME BASH_ENV PATH
+export USERNAME BASH_ENV
 
 set ICAROOT="/pkg/wts/bin"
 export ICAROOT
@@ -116,4 +119,3 @@ if [ -f ~/cros_glue/profile.cros ]; then
 	. ~/cros_glue/profile.cros
 fi
 
-#cd ~
