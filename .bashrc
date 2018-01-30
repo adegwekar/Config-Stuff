@@ -11,10 +11,11 @@ HISTCONTROL=ignoredups:ignorespace
 
 # append to the history file, don't overwrite it
 shopt -s histappend
+export PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+HISTSIZE=5000
+HISTFILESIZE=8000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -22,14 +23,6 @@ shopt -s checkwinsize
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
-# set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
-else
-	# CROS version of lesspipe.sh is old
-	export LESSOPEN="| lesspipe %s"
-fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
@@ -58,24 +51,11 @@ else
     PS1='\u@\h:\w\$ '
 fi
 
-# Bash shell command completion
-if [ -f /usr/local/etc/bash_completion.d/git-completion.bash ]; then
-    . /usr/local/etc/bash_completion.d/git-completion.bash
-fi
-
-
-if [ -f /usr/local/etc/bash_completion.d/git-prompt.sh ]; then
-    . /usr/local/etc/bash_completion.d/git-prompt.sh
-fi
-
-GIT_PS1_SHOWDIRTYSTATE=true
-GIT_PS1_SHOWUNTRACKEDFILES=yes
-GIT_PS1_SHOWUPSTREAM=verbose
+GIT_PS1_SHOWDIRTYSTATE=1
+GIT_PS1_SHOWUNTRACKEDFILES=1
+GIT_PS1_SHOWUPSTREAM="auto verbose"
 PS1='$(__git_ps1 "(%s) ")'"${PS1}"
 
-if [ -e /etc/debian_chroot ]; then
-   PS1="(cr) ${PS1}"
-fi
 unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
@@ -86,6 +66,8 @@ xterm*|rxvt*)
 *)
     ;;
 esac
+
+PROMPT_DIRTRIM=2
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -104,18 +86,14 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 # User specific environment and startup programs
+PATH=$PATH:$HOME/bin
 
-export PATH=${PATH}:${HOME}/.rvm/bin:/Applications/adt-bundle-mac-x86_64-20140702/sdk/tools:/Applications/adt-bundle-mac-x86_64-20140702/sdk/platform-tools
-
-BASH_ENV=$HOME/.bashrc
-USERNAME=""
-
-export USERNAME BASH_ENV
-
-set ICAROOT="/pkg/wts/bin"
-export ICAROOT
-
-if [ -f ~/cros_glue/profile.cros ]; then
-	. ~/cros_glue/profile.cros
+if [ -f ~/git/git-completion ]; then
+    source ~/git/git-completion.sh
 fi
 
+if [ -f ~/tmux-completion ]; then
+    . ~/tmux-completion
+fi
+
+umask 022
